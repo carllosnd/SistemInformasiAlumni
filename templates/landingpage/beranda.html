@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/static/assets/img/ukrimlogo.png"/>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/static/assets/css/table.css" />
+    <link rel="stylesheet" href="/static/assets/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat"
+      rel="stylesheet"
+    />
+    <title>Beranda</title>
+    <style>
+      h2:before,
+      h2:after {
+        content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+        text-decoration: line-through;
+        margin: auto 0.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="logo">
+        <img src="/static/assets/img/ukrimlogo.png" alt="Logo" />
+        <span>Sistem Informasi Alumni UKRIM</span>
+      </div>
+      <ul class="nav-list">
+        <li><a href="{% url 'beranda' %}">Beranda</a></li>
+        <li class="dropdown">
+          <a href="#">Tentang Kami</a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'visimisi' %}">Visi & Misi</a></li>
+            <li><a href="{% url 'strorg' %}">Struktur Organisasi</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#">Alumni</a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'dataalumni' %}">Data Alumni</a></li>
+            <li><a href="{% url 'login' %}" target="_blank">Login Alumni</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#">Informasi</a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'agenda' %}">Agenda</a></li>
+            <li><a href="{% url 'pengumuman' %}">Pengumuman</a></li>
+            <li><a href="{% url 'loker' %}">Lowongan Kerja (Loker)</a></li>
+          </ul>
+        </li>
+        <li><a href="{% url 'donasi' %}">Donasi</a></li>
+      </ul>
+    </div>
+    <div class="row" style="margin: 1px; margin-top: 20px;">
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="/static/assets/img/wisuda 1.jpg"
+              alt="Wisuda UKRIM"
+              style="width: 100%"
+            />
+            <div class="carousel-caption">
+              <h3>Selamat Datang di Sistem Informasi Alumni</h3>
+              <h3>Universitas Kristen Immanuel Yogyakarta</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Left and right controls
+          <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+          </a>
+          <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+              <span class="carousel-control-next-icon"></span>
+          </a> -->
+      </div>
+    </div>
+    <!-- Tambahkan link ke Bootstrap JS dan jQuery -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+
+    <h2 class="text text-center">Seputar Informasi</h2>
+    <div class="row">
+      <div class="column" style="background-color: white">
+        <h4 class="title text-center">Agenda</h4>
+      </div>
+      <div class="column" style="background-color: white">
+        <h4 class="title text-center">Pengumuman</h4>
+      </div>
+      <div class="column" style="background-color: white">
+        <h4 class="title text-center">Lowongan Pekerjaan</h4>
+      </div>
+    </div>
+  </body>
+</html>

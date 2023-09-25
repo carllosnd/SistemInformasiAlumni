@@ -1,0 +1,92 @@
+body {
+  margin: 10px;
+  padding: 0;
+  font-family: "Montserrat";
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  color: black;
+  padding: 10px 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list li {
+  margin-right: 20px;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: auto;
+  background-color: white;
+  list-style: none;
+  padding: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  margin: 0;
+  padding: 10px 20px;
+}
+
+.dropdown-menu a {
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  text-decoration: underline;
+}
+
+.title {
+  margin-left: 10px;
+  margin-top: 30px;
+  font-weight: bold;
+}
+
+.text {
+  margin-left: 10px;
+  margin-top: 20px;
+}
+.margincard {
+  margin-left: 5px;
+}
+
+.cardimage {
+  width: 150px;
+  height: 100px;
+}

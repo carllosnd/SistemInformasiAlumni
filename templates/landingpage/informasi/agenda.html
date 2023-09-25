@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/assets/css/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="logo">
+        <img src="/static/assets/img/ukrimlogo.png" alt="Logo" />
+        <span>Sistem Informasi Alumni UKRIM</span>
+      </div>
+      <ul class="nav-list">
+        <li><a href="{% url 'beranda' %}">Beranda</a></li>
+        <li class="dropdown">
+          <a href="#">Tentang Kami</a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'visimisi' %}">Visi & Misi</a></li>
+            <li><a href="{% url 'strorg' %}">Struktur Organisasi</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#">Alumni</a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'dataalumni' %}">Data Alumni</a></li>
+            <li><a href="{% url 'login' %}" target="_blank">Login Alumni</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#">Informasi</a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'agenda' %}">Agenda</a></li>
+            <li><a href="{% url 'pengumuman' %}">Pengumuman</a></li>
+            <li><a href="{% url 'loker' %}">Lowongan Kerja (Loker)</a></li>
+          </ul>
+        </li>
+        <li><a href="{% url 'donasi' %}">Donasi</a></li>
+      </ul>
+    </div>
+    <h1 class="title">Agenda</h1>
+  </body>
+</html>
