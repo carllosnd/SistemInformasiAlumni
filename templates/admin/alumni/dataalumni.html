@@ -1,0 +1,91 @@
+{% extends 'layout/baseadmin.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <p class="alert alert-warning alert-dismissible fade show" role="alert">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    <div class="card">
+        <div class="table-responsive card-body">
+            <form action="{% url 'ajukandata' %}" method="POST">
+                <h1 class="font-weight-bold text-primary">Data Alumni</h1>
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>No</th>
+                            <th>NIM</th>
+                            <th>Nama</th>
+                            <th>Alamat</th>
+                            <th>Email</th>
+                            <th>No Hp</th>
+                            <th>Prodi</th>
+                            <th>Instansi</th>
+                            <th>Jabatan</th>
+                            <th>Gambar</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dataalumni in dataalumni %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ dataalumni.nim }}</td>
+                            <td>{{ dataalumni.nama }}</td>
+                            <td>{{ dataalumni.alamat }}</td>
+                            <td>{{ dataalumni.email }}</td>
+                            <td>{{ dataalumni.nohp }}</td>
+                            <td>{{ dataalumni.prodi }}</td>
+                            <td>{{ dataalumni.instansi }}</td>
+                            <td>{{ dataalumni.jabatan }}</td>
+                            <td>
+                                <img style="width: 100px;" src="{{ dataalumni.gambar.url }}" alt="">
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" href="{% url 'deletealumni' dataalumni.nim %}">
+                                    <i class="fas fa-trash"></i>HAPUS</a>
+                            </td>
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+            <div class="pagination">
+                <ul class="pagination justify-content-center">
+            
+                    {% if dataalumni.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ dataalumni.previous_page_number }}" aria-label="Sebelumnya">
+                                <span aria-hidden="true"></span>Previous
+                            </a>
+                        </li>
+                    {% endif %}
+            
+                    {% for page_num in dataalumni.paginator.page_range %}
+                        <li class="page-item{% if page_num == dataalumni.number %} active{% endif %}">
+                            <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                        </li>
+                    {% endfor %}
+            
+                    {% if dataalumni.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ dataalumni.next_page_number }}" aria-label="Berikutnya">
+                                <span aria-hidden="true"></span>Next
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div> 
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

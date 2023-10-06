@@ -1,0 +1,97 @@
+{% extends 'layout/baseadmin.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 class="font-weight-bold text-primary">Selamat Datang, {{ user.username }}</h1> <br>
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h1 mb-0 font-weight-bold text-gray-800">{{ dataalumni }}</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Alumni</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-alt fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h1 mb-0 font-weight-bold text-gray-800">{{ verifikasi }}</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Data Alumni Yang Belum Diverifikasi</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-check fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h1 mb-0 font-weight-bold text-gray-800">{{ dataagenda }}</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Agenda</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar-check fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h1 mb-0 font-weight-bold text-gray-800">{{ datapengumuman }}</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Total Pengumuman</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="h1 mb-0 font-weight-bold text-gray-800">{{ dataloker }}</div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Total Lowongan Kerja</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}

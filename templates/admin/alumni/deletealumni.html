@@ -1,0 +1,91 @@
+{% extends 'layout/baseadmin.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card shadow-lg">
+        <div class="card-header bg-danger">
+          <div class="text-warning text-center"><h2>Delete Data Alumni</h2></div>
+          <div class="form-group">
+            <h3 class="text-center ml-5">Apakah Anda Yakin Ingin Menghapus Data Ini ?</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6 ml-5">
+              <div class="card">
+                <div class="card-body">
+                  <table class="table">
+                    <tbody>
+                      <div class="form-group">
+                        <tr>
+                          <td><b>Nama</b></td>
+                          <td>: {{ dataalumni.nama }}</td>
+                        </tr>
+                        <tr>
+                          <td><b>NIM</b></td>
+                          <td>: {{ dataalumni.nim }}</td>
+                        </tr>
+                        <tr>
+                          <td><b>Alamat</b></td>
+                          <td>: {{ dataalumni.alamat }}</td>
+                        </tr>
+                        <tr>
+                          <td><b>Email</b></td>
+                          <td>: {{ dataalumni.email }}</td>
+                        </tr>
+                        <tr>
+                          <td><b>No Hp</b></td>
+                          <td>: {{ dataalumni.nohp }}</td>
+                        </tr>
+                        <tr>
+                          <td><b>Tahun Lulus</b></td>
+                          <td>: {{ dataalumni.thnlulus }}</td>
+                        </tr>
+                        <tr>
+                          <td><b>Program Studi</b></td>
+                          <td>: {{ dataalumni.prodi }}</td>
+                        </tr>
+                        <tr>
+                          <td><b>Instansi</b></td>
+                          <td>: {{ dataalumni.instansi }}</td>
+                        </tr>
+                        <tr>
+                          <td><b>Jabatan</b></td>
+                          <td>: {{ dataalumni.jabatan }}</td>
+                        </tr>
+                      </div>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-5 mb-sm-0 mt-5">
+              <div class="card text-center shadow-lg" style="background-color: #cce7e8;">
+                <div class="card-body">
+                  <div class="form-group">
+                    <img class="img-fluid img-circle position-relative" style="width: 200px;" src="{{ dataalumni.gambar.url }}" alt="Foto : {{ dataalumni.nama }}">
+                  </div>
+                  <div class="form-group">
+                    <h2>{{ dataalumni.nama }}</h2>
+                  </div><br>
+                  <div class="form-group">
+                    <a class="btn btn-outline-warning" style="float: left;" href="{% url 'dataalumni' %}">Cancel</a>
+                    <a class="btn btn-outline-danger" style="float: right;" href="{% url 'postdeletealumni' dataalumni.nim %}">
+                      <i class="fas fa-trash"></i> Delete
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+</html>
+{% endblock %}

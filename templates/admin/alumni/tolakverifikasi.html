@@ -1,0 +1,48 @@
+{% extends 'layout/baseadmin.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tolak Pengajuan Data</title>
+</head>
+<body>
+    <div class="card shadow-lg">
+        <div class="card-header bg-danger">
+          <div class="text-warning text-center"><h2>Tolak Pengajuan Data</h2></div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <h4 class="text-start">Apakah Anda Yakin Ingin Menolak Data Ini?</h4>
+          </div>
+          <div class="form-group">
+            <table class="table">
+              <tbody>
+                  <tr>
+                    <td class="col-4"><h5>NIM</h5></td>
+                    <td><h5> : {{ dataalumni.nim }}</h5></td>
+                  </tr>
+                  <tr>
+                    <td><h5>Nama</h5></td>
+                    <td><h5> : {{ dataalumni.nama }}</h5></td>
+                  </tr>
+                  <tr>
+                    <td><h5>Prodi</h5></td>
+                    <td><h5> : {{ dataalumni.prodi }}</h5></td>
+                  </tr>
+              </tbody>
+            </table>  
+          </div>
+          <div class="form-group">
+            <a class="btn btn-warning ml-4" href="{% url 'verifikasi' %}">Cancel</a>
+            <a class="btn btn-danger" style="float: right;" href="{% url 'posttolakverif' dataalumni.nim %}">
+            <i class="fa fa-trash"></i> Hapus</a>
+        </div>
+        </div>
+      </div>
+</body>
+</html>
+
+{% endblock %}
