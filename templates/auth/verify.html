@@ -1,0 +1,13 @@
+{% autoescape off %}
+Hi {{ user.username }},
+
+Silahkan klik link dibawah ini untuk aktivasi akun anda :
+
+{% block reset_link %}
+http://{{ domain }}{% url 'verification' uidb64=uid token=token %}
+{% endblock %}
+
+Kalau anda merasa tidak pernah melakukan tindakan ini, silahkan hiraukan saja email ini
+{% endautoescape %}
+
+
