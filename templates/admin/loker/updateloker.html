@@ -1,0 +1,47 @@
+{% extends 'layout/baseadmin.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Lowongan Pekerjaan</title>
+</head>
+<body>
+    <div class="card">
+        <div class="card-body">
+            {% if messages %}
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+            {% endif %}
+            <form action="{% url 'postupdateloker' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h1 class="font-weight-bold text-primary">Form Update Loker</h1> <br>
+                <div class="form-group">
+                    <p>Id Loker</p>
+                    <input class="form-control" type="text" name="idloker" maxlength="4" value="{{ dataloker.idloker }}" readonly>
+                </div>
+                <div class="form-group">
+                    <p>Nama Loker</p>
+                    <input class="form-control" type="text" name="namaloker" maxlength="255" value="{{ dataloker.namaloker}}" required>
+                </div>
+                <div class="form-group">
+                    <p>Instansi Penerima</p>
+                    <input class="form-control" type="text" name="instansi" maxlength="255" value="{{ dataloker.instansi}}" required>
+                </div>
+                <div class="form-group">
+                    <p>File Terkait</p>
+                    <a href="{{ dataloker.fileloker.url }}">Your current File</a>
+                    <input class="form-control" type="file" name="fileloker" value="{{ dataloker.fileloker.url }}">
+                </div>
+                <button class="btn btn-success" type="submit">SUBMIT</button>
+                <a class="btn btn-warning " href="{% url 'dataloker' %}">KEMBALI</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

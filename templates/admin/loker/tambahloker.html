@@ -1,0 +1,42 @@
+{% extends 'layout/baseadmin.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="alert alert-danger alert-dismissible fade show" role="alert">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <div class="card">
+        <div class="card-body">
+            <form action="{% url 'postloker' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h1 class="font-weight-bold text-primary">Form Tambah Loker</h1> <br>
+                <div class="form-group">
+                    <p>Nama Loker</p>
+                    <input class="form-control" type="text" name="namaloker" maxlength="255" required>
+                </div>
+                <div class="form-group">
+                    <p>Instansi Penerima</p>
+                    <input class="form-control" type="text" name="instansi" maxlength="255" required>
+                </div>
+                <div class="form-group">
+                    <p>File Terkait</p>
+                    <input style="width: fit-content;" type="file" alt="" name="fileloker" required>
+                </div>
+                <button class="btn btn-success" type="submit">SUBMIT</button>
+                <a class="btn btn-warning " href="{% url 'dataloker' %}">KEMBALI</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

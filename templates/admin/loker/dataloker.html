@@ -1,0 +1,83 @@
+{% extends 'layout/baseadmin.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lowongan Pekerjaan</title>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <p class="alert alert-warning alert-dismissible fade show" role="alert">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    <div class="card">
+        <div class="table-responsive card-body">
+            <form action="{% url 'addloker' %}" method="POST">
+                <a class="btn btn-primary" href="{% url 'addloker' %}">Tambah Loker</a> <p></p>
+                <h1 class="font-weight-bold text-primary">Daftar Lowongan Pekerjaan</h1>
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>No</th>
+                            <th>Date</th>
+                            <th>Nama Loker</th>
+                            <th>Instansi Penerima</th>
+                            <th>File Terkait</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for loker in dataloker %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ loker.dateloker|date:'d M Y' }}</td>
+                            <td>{{ loker.namaloker }}</td>
+                            <td>{{ loker.instansi }}</td>
+                            <td>
+                                <a href="{{ loker.fileloker.url }}">Document</a> 
+                            </td>
+                            <td>
+                                <a class="btn btn-warning" href="{% url 'updateloker' loker.idloker %}">
+                                <i class="fas fa-pencil-alt"></i>UPDATE</a> |
+                                <a class="btn btn-danger" href="{% url 'deleteloker' loker.idloker %}">
+                                <i class="fas fa-trash"></i>HAPUS</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+            <div class="pagination">
+                <ul class="pagination justify-content-center">
+            
+                    {% if dataloker.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ dataloker.previous_page_number }}" aria-label="Sebelumnya">
+                                <span aria-hidden="true"></span>Previous
+                            </a>
+                        </li>
+                    {% endif %}
+            
+                    {% for page_num in dataloker.paginator.page_range %}
+                        <li class="page-item{% if page_num == dataloker.number %} active{% endif %}">
+                            <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                        </li>
+                    {% endfor %}
+            
+                    {% if dataloker.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ dataloker.next_page_number }}" aria-label="Berikutnya">
+                                <span aria-hidden="true"></span>Next
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div> 
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

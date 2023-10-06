@@ -1,0 +1,56 @@
+{% extends 'layout/baseadmin.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Lowongan Pekerjaan</title>
+</head>
+<body>
+    <div class="card shadow-lg">
+        <div class="card-header bg-danger">
+          <div class="text-warning text-center"><h2>Hapus Lowongan Pekerjaan</h2></div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <h4 class="text-start">Apakah Anda Yakin Ingin Menghapus Informasi Lowongan Pekerjaan Ini ?</h4>
+          </div>
+          <div class="form-group">
+            <table class="table">
+              <tbody>
+                  <tr>
+                    <td class="col-4"><h5>Id Loker</h5></td>
+                    <td><h5> : {{ dataloker.idloker }}</h5></td>
+                  </tr>
+                  <tr>
+                    <td><h5>Date</h5></td>
+                    <td><h5> : {{ dataloker.dateloker }}</h5></td>
+                  </tr>
+                  <tr>
+                    <td><h5>Nama Loker</h5></td>
+                    <td><h5> : {{ dataloker.namaloker }}</h5></td>
+                  </tr>
+                  <tr>
+                    <td><h5>Instansi Penerima</h5></td>
+                    <td><h5> : {{ dataloker.instansi }}</h5></td>
+                  </tr>
+                  <tr>
+                    <td><h5>File Terkait</h5></td>
+                    <td><h5> : <a href="{{ dataloker.fileloker.url }}">Document</a></h5></td>
+                  </tr>
+              </tbody>
+            </table>  
+          </div>
+          <div class="form-group">
+            <a class="btn btn-warning ml-4" href="{% url 'dataloker' %}">Cancel</a>
+            <a class="btn btn-danger" style="float: right;" href="{% url 'postdeleteloker' dataloker.idloker %}">
+            <i class="fa fa-trash"></i> Hapus</a>
+        </div>
+        </div>
+      </div>
+</body>
+</html>
+
+{% endblock %}

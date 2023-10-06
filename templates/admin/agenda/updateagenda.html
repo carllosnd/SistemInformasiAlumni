@@ -1,0 +1,46 @@
+{% extends 'layout/baseadmin.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    <div class="card">
+        <div class="card-body">
+            <form action="{% url 'postupdateagenda' %}" method="POST">
+                {% csrf_token %}
+                <h1 class="font-weight-bold text-primary">Form Update Agenda</h1> <br>
+                <div class="form-group">
+                    <p>Id</p>
+                    <input class="form-control" type="text" name="idagenda" maxlength="4" value="{{ dataagenda.idagenda }}" readonly>
+                </div>
+                <div class="form-group">
+                    <p>Nama Agenda</p>
+                    <input class="form-control" type="text" name="namaagenda" maxlength="255" value="{{ dataagenda.namaagenda }}" required>
+                </div>
+                <div class="form-group">
+                    <p>Tanggal Kegiatan</p>
+                    <input class="form-control" type="date" name="dateagenda" value="{{ dataagenda.dateagenda }}">
+                </div>
+                <div class="form-group">
+                    <p>Deskripsi Agenda</p>
+                    <textarea class="form-control" name="deskripsiagenda" cols="" rows="10">{{ dataagenda.deskripsiagenda }}</textarea>
+                </div>
+                <button class="btn btn-success" type="submit">SUBMIT</button>
+                <a class="btn btn-warning " href="{% url 'dataagenda' %}">KEMBALI</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'layout/baseadmin.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card shadow-lg">
+        <div class="card-header bg-danger">
+          <div class="text-warning text-center"><h2>Delete Agenda</h2></div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <h4 class="text-start">Apakah Anda Yakin Ingin Menghapus Agenda Ini ?</h4>
+          </div>
+          <div class="form-group">
+            <table class="table">
+              <tbody>
+                  <tr>
+                    <td class="col-4"><h5>Id Agenda</h5></td>
+                    <td><h5> : {{ dataagenda.idagenda }}</h5></td>
+                  </tr>
+                  <tr>
+                    <td><h5>Nama Agenda</h5></td>
+                    <td><h5> : {{ dataagenda.namaagenda }}</h5></td>
+                  </tr>
+                  <tr>
+                    <td><h5>Tanggal Kegiatan</h5></td>
+                    <td><h5> : {{ dataagenda.dateagenda }}</h5></td>
+                  </tr>
+                  <tr>
+                    <td><h5>Deskripsi Agenda</h5></td>
+                    <td><h5> : {{ dataagenda.deskripsiagenda }}</h5></td>
+                  </tr>
+              </tbody>
+            </table>  
+          </div>
+          <div class="form-group">
+            <a class="btn btn-warning ml-4" href="{% url 'dataagenda' %}">Cancel</a>
+            <a class="btn btn-danger" style="float: right;" href="{% url 'postdeleteagenda' dataagenda.idagenda %}">
+            <i class="fa fa-trash"></i> Hapus</a>
+        </div>
+        </div>
+      </div>
+</body>
+</html>
+
+{% endblock %}
