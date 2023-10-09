@@ -1,0 +1,122 @@
+{% extends 'layout/baseuser.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bincang Alumni</title>
+    <style>
+        h5:before,
+        h5:after {
+            content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+            text-decoration: line-through;
+            margin: auto 0.5em;
+        }
+        .message-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            /* margin: 5px; */
+            background-color: royalblue;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .replies {
+            display: none;
+            list-style: none;
+            padding: 0;
+        }
+
+        .show-replies {
+            display: block;
+        }
+
+        .reply-box {
+            border: 1px solid rgb(255, 255, 255);
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: rgb(52, 83, 176);
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            <p class="alert alert-success alert-dismissible fade show" role="alert">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <div class="card">
+        <div class="card-body">
+            <form action="{% url 'addmessage' %}" method="POST">
+                {% csrf_token %}
+                <h1 class="font-weight-bold text-primary">Forum Bincang Alumni</h1>
+                <p>Selamat datang di Forum Bincang Alumni. Disini anda bisa mengirimkan pertanyaan atau sekedar berinteraksi dengan alumni lainnya.
+                    Mohon tidak mengirimkan pesan yang mengandung unsur SARA atau hal-hal negatif lainnya.</p>
+                <div class="form-group">
+                    <textarea class="form-control" name="pesan" rows="5" placeholder="Tuliskan Pesan Anda Disini"></textarea>
+                </div>
+                <button style="float: right;" class="btn btn-outline-info" type="submit"><i class="fas fa-paper-plane"></i> Send</button>
+            </form>
+        </div>
+        <div class="card-body">
+              <h5 class="text-center">Mulailah untuk berinteraksi dengan alumni yang lain </h5> <br>
+              <ul>
+                  {% for message in datapesan %}
+                  <div class="message-box">
+                    <p style="float: right; color: #faff72;">{{message.date|date:'d M Y'}}</p>
+                    <p style="color: #faff72;">{{ message.user.first_name }}</p> 
+                    <p style="color: white;">{{ message.pesan }}</p>
+                    <a href="#" class="reply-button" data-formid="{{ message.id }}" style="color: black;"><i class="fas fa-reply"></i> Reply</a>
+                    <a href="#" class="toggle-replies" style="color: black; float: right;">Lihat Balasan <i class="fas fa-angle-down"></i></a>
+                    <form id="reply-form-{{ message.id }}" action="{% url 'reply' message.id %}" method="POST" style="display: none;">
+                        {% csrf_token %}
+                        <div class="form-group"> <br>
+                           <textarea class="form-control" name="reply" rows="2" placeholder="Balas Pesan"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-info"><i class="fas fa-paper-plane"></i> Send</button>
+                     </form>
+
+                     <!-- Tambahkan daftar balasan dengan class "replies" -->
+                     <ul class="replies">
+                         {% for reply in message.reply_set.all %}
+                        <br>
+                        <li class="reply-box">
+                            <p style="color: #faff72; float: right;">{{ reply.date_reply|date:'d M Y'}}</p>
+                            <p style="color: #faff72;">{{ reply.user.first_name }}</p> 
+                            <p style="color: white;">{{ reply.reply }}</p>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                  </div>
+                {% endfor %}
+              </ul>
+          </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Mendaftarkan event click pada setiap tombol "Reply"
+            $('.reply-button').click(function(e) {
+                e.preventDefault();
+                // Mendapatkan id form yang sesuai
+                var formId = $(this).data('formid');
+                // Menampilkan atau menyembunyikan form berdasarkan id
+                $('#reply-form-' + formId).toggle();
+            });
+        });
+        // Tambahkan JavaScript untuk menangani tampilan balasan
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleButtons = document.querySelectorAll(".toggle-replies");
+            toggleButtons.forEach((button) => {
+                button.addEventListener("click", function () {
+                    const replies = this.parentElement.querySelector(".replies");
+                    replies.classList.toggle("show-replies");
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+{% endblock %}

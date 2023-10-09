@@ -1,0 +1,30 @@
+{% extends 'layout/baseuser.html' %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="message-box">
+      <strong>{{ datapesan.user.username }}:</strong> {{ datapesan.pesan }}
+    </div>
+
+    <!-- Form untuk reply -->
+    <form method="post" action="{% url 'postreply' %}">
+      {% csrf_token %}
+      <input type="hidden" name="id_pesan" value="{{ datapesan.id }}" />
+      <textarea name="pesan_reply" placeholder="Balas pesan..." rows="3"></textarea>
+      <button type="submit">Kirim Reply</button>
+    </form>
+
+    <!-- Menampilkan reply -->
+    {% for reply in replies %}
+    <div class="reply-box">
+      <strong>{{ reply.user.username }}:</strong> {{ reply.pesan_reply }}
+    </div>
+    {% endfor %}
+  </body>
+</html>
+{% endblock %}

@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import beranda, visimisi, strorg, alumni, agenda, pengumuman, loker,  donasi, detailagenda, detailpengumuman, detailloker
 from .views import register, sigin, logout_user, verification
-from .views import ajukandata, postajukandata, homeuser, updatedata, postupdatedata
-from .views import base, header
+from .views import ajukandata, postajukandata, homeuser, updatedata, postupdatedata, bincangalumni, addmessage, reply
+from .views import base, header, profile
 from .views import dataalumni, deletealumni, postdeletealumni, homeadmin, footer, verifikasi, tolakverif, posttolakverif, addadmin, dataadmin, deleteadmin, postdeleteadmin
 from .views import dataagenda, addagenda, postagenda, deleteagenda, postdeleteagenda, updateagenda, postupdateagenda
 from .views import datapengumuman, addpengumuman, postpengumuman, updatepengumuman, postupdatepengumuman, deletepengumuman, postdeletepengumuman 
@@ -33,6 +33,7 @@ urlpatterns = [
     path('base',base,name="base"),
     path('footer',footer,name='footer'),
     path('header',header,name='header'),
+    path('profile',profile,name='profile'),
     
     #User
     path('ajukandata',ajukandata,name='ajukandata'),
@@ -40,6 +41,10 @@ urlpatterns = [
     path('homeuser',homeuser,name='homeuser'),
     path('updatedata/<str:nim>',updatedata,name='updatedata'),
     path('postupdatedata',postupdatedata,name='postupdatedata'),
+    path('bincangalumni',bincangalumni,name='bincangalumni'),
+    path('addmessage',addmessage,name='addmessage'),
+    path('reply/<int:id>',reply,name='reply'),
+    # path('postreply',postreply,name='postreply'),
     
     #Admin
     path('dataalumni/',dataalumni,name='dataalumni'),

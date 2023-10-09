@@ -19,7 +19,6 @@ class DataAlumni(models.Model):
     gambar = models.ImageField(upload_to='static/assets/images', blank=True, null=True)
     status = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    diajukan = models.BooleanField(default=False)
     
     def delete(self, *args, **kwargs):
         # hapus foto yang terkait dengan instance Alumni saat dihapus
@@ -59,3 +58,19 @@ class Loker(models.Model):
         if self.fileloker:
             os.remove(self.fileloker.path)
         super().delete(*args, **kwargs)
+
+class BincangAlumni(models.Model):
+    id  = models.AutoField(primary_key=True)
+    pesan = models.CharField(max_length=250)
+    date = models.DateField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Reply(models.Model):
+    message = models.ForeignKey(BincangAlumni, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reply = models.CharField(max_length=250)
+    date_reply = models.DateField()
+
+    def __str__(self):
+        return f'{self.user.username} - {self.message}'
+    

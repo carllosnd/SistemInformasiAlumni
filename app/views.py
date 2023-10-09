@@ -4,14 +4,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login
-from app.forms import RegisterUserForm
+from app.forms import RegisterUserForm, ReplyForm
 from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Agenda, DataAlumni, Loker, Pengumuman
-from django.core.exceptions import ValidationError
-from django.core.paginator import Paginator, Page
+from .models import Agenda, BincangAlumni, DataAlumni, Loker, Pengumuman, Reply
+from django.core.paginator import Paginator
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -19,7 +17,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse
 
 def header(request):
     return render(request, 'layout/header.html')
@@ -54,7 +51,7 @@ def sigin(request):
     else:
         return render(request, 'auth/login.html', {})
 
-
+@login_required(login_url='login')
 def logout_user(request):
     logout(request)
     messages.success(request, 'Berhasil logout')
@@ -168,9 +165,13 @@ def base(request):
 
 @login_required(login_url='login')
 def ajukandata(request):
-    username = request.user.username
-    return render(request, 'user/ajukandata.html', {'username' : username})
-
+    user = request.user
+    if DataAlumni.objects.filter(user=user).exists():
+        messages.error(request, 'Anda sudah mengajukan data.')
+        return redirect('/homeuser')  # Ubah ini sesuai dengan URL yang sesuai
+    else:
+        username = user.username
+        return render(request, 'user/ajukandata.html', {'username': username})
 
 def postajukandata(request):
     nim = request.POST['nim']
@@ -206,6 +207,7 @@ def postajukandata(request):
         messages.success(request, 'Data berhasil di ajukan, silahkan menunggu verifikasi dari admin')
     return redirect('/homeuser')
 
+@login_required(login_url='login')
 def updatedata(request, nim):
     user_data = DataAlumni.objects.get(nim=nim)
     context = {
@@ -233,6 +235,7 @@ def postupdatedata(request):
     messages.success(request, 'Data anda berhasil diperbaharui')
     return redirect('/homeuser')
 
+@login_required(login_url='login')
 def verifikasi(request):
     if request.method == 'GET':
         unverified_data = DataAlumni.objects.filter(status=False)
@@ -257,6 +260,7 @@ def posttolakverif(request, nim):
     DataAlumni.objects.get(nim=nim).delete()
     return redirect('/verifikasi')
 
+@login_required(login_url='login')
 def dataalumni(request):
     dataalumni = DataAlumni.objects.filter(status=True).order_by('nama')
     page_number = request.GET.get('page')
@@ -314,6 +318,7 @@ def postagenda(request):
     messages.success(request, 'Agenda baru berhasil ditambahkan')
     return redirect('/dataagenda')
 
+@login_required(login_url='login')
 def dataagenda(request):
     dataagenda = Agenda.objects.all().order_by('idagenda')
     page_number = request.GET.get('page')
@@ -381,6 +386,7 @@ def postpengumuman(request):
     messages.success(request, 'Pengumuman berhasil di tambahkan')
     return redirect('/datapengumuman')
 
+@login_required(login_url='login')
 def datapengumuman(request):
     datapengumuman = Pengumuman.objects.all().order_by('idpengumuman')
     page_number = request.GET.get('page')
@@ -446,6 +452,7 @@ def postloker(request):
     messages.success(request, 'Loker berhasil di tambahkan')
     return redirect('/dataloker')
 
+@login_required(login_url='login')
 def dataloker(request):
     dataloker = Loker.objects.all().order_by('idloker')
     page_number = request.GET.get('page')
@@ -495,6 +502,7 @@ def postdeleteloker(request, idloker):
 
 def addadmin(request):
     if request.method == "POST":
+        name = request.POST['name']
         username = request.POST['username']
         password = request.POST['password']
         
@@ -503,7 +511,10 @@ def addadmin(request):
             return redirect('/addadmin')
         else:
             # Membuat objek User baru sebagai admin
-            dataadmin = User(username=username)
+            dataadmin = User(
+                first_name=name,
+                username=username
+            )
             dataadmin.set_password(password)  # Mengatur password dengan benar
             dataadmin.is_staff = True  # Menandai sebagai staff
             dataadmin.save()
@@ -526,6 +537,7 @@ def postdeleteadmin(request, id):
     messages.success(request, 'Admin berhasil di hapus')
     return redirect('/dataadmin')
 
+@login_required(login_url='login')
 def dataadmin(request):
     dataadmin = User.objects.filter(is_staff=True).order_by('id')
     context = {
@@ -542,3 +554,43 @@ def homeuser(request):
         'user_data' : user_data
     }
     return render(request, 'user/home.html', context)
+
+@login_required(login_url='login')
+def bincangalumni(request):
+    datapesan = BincangAlumni.objects.all().order_by('-date')
+    datareply = Reply.objects.all().order_by('date_reply')
+    context = {
+        'datapesan' : datapesan,
+        'datareply' : datareply
+    }
+    return render(request, 'user/bincangalumni.html', context)
+
+def addmessage(request):
+    pesan = request.POST['pesan']
+    
+    datapesan = BincangAlumni (
+        pesan = pesan,
+        date = datetime.date.today(),
+        user = request.user
+    )
+    datapesan.save()
+    messages.success(request, 'Pesan Anda Berhasil Dikirim')
+    return redirect('bincangalumni')
+
+def reply(request, id):
+    if request.method == 'POST':
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            message = BincangAlumni.objects.get(pk=id)
+            reply = form.cleaned_data['reply']
+            Reply.objects.create(message=message, user=request.user, reply=reply, date_reply=datetime.date.today())
+            messages.success(request, 'Balasan anda berhasil terkirim')
+    return redirect('bincangalumni') 
+
+@login_required(login_url='login')
+def profile(request):
+    user = request.user
+    context = {
+        'user' : user
+    }
+    return render(request, 'profile.html', context)
