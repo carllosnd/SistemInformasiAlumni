@@ -1,0 +1,38 @@
+{% extends 'layout/baseuser.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+        <div class="card-body">
+            <form action="{% url 'addprofileimage' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h1 class="font-weight-bold text-primary">Profile User</h1> <br>
+                <div class="form-group">
+                    <p>Nama : {{ user.first_name }}</p>
+                </div>
+                <div class="form-group">
+                    <p>Username : {{ user.username }}</p>
+                </div>
+                {% for image in profileimage %}
+                <div class="form-group">
+                    <img src="{{ image.image.url }}" alt="">
+                </div>
+                {% endfor %}
+                <!-- Profile Image -->
+                <div class="form-group">
+                    <p>File Terkait</p>
+                    <input style="width: fit-content;" type="file" alt="" name="image" required>
+                </div>
+                <button class="btn btn-success" type="submit">SUBMIT</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
