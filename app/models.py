@@ -17,6 +17,8 @@ class DataAlumni(models.Model):
     instansi = models.CharField(max_length=255)
     jabatan = models.CharField(max_length=255)
     gambar = models.ImageField(upload_to='static/assets/images', blank=True, null=True)
+    grup = models.CharField(max_length=255)
+    linkedin = models.CharField(max_length=255)
     status = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
@@ -73,4 +75,11 @@ class Reply(models.Model):
 
     def __str__(self):
         return f'{self.user.username} - {self.message}'
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='static/assets/images/profile', blank=True, null=True)
+
+    def __str__(self):
+        return self.user.username
     

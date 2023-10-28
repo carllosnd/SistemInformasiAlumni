@@ -65,7 +65,7 @@
                   {% for message in datapesan %}
                   <div class="message-box">
                     <p style="float: right; color: #faff72;">{{message.date|date:'d M Y'}}</p>
-                    <p style="color: #faff72;">{{ message.user.first_name }}</p> 
+                    <p style="color: #faff72;"> {{ message.user.first_name }}</p> 
                     <p style="color: white;">{{ message.pesan }}</p>
                     <a href="#" class="reply-button" data-formid="{{ message.id }}" style="color: black;"><i class="fas fa-reply"></i> Reply</a>
                     <a href="#" class="toggle-replies" style="color: black; float: right;">Lihat Balasan <i class="fas fa-angle-down"></i></a>

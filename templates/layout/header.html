@@ -5,15 +5,142 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Navbar 1</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/assets/css/landingpage.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <!-- <link rel="stylesheet" href="/static/assets/css/landingpage.css" /> -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      html {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #ffffff;
+        font-family: "Poppins";
+      }
+
+      nav {
+        background-color: rgb(255, 255, 255);
+        display: flex;
+        justify-content: space-between;
+        padding: 0rem 1rem;
+      }
+
+      nav ul {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        list-style: none;
+      }
+
+      nav div img {
+        width: 50px;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        font-family: "Poppins";
+        color: #131313;
+        font-weight: 600;
+        padding: 8px 0;
+        transition: all;
+        transition-duration: 300ms;
+        border-bottom: 1px solid rgba(255, 68, 0, 0);
+      }
+
+      nav ul li a:hover {
+        color: orangered;
+        /* border-bottom: 1px solid orangered; */
+      }
+
+      .menu-icon {
+        /* background-color: tomato; */
+        font-size: 28px;
+        display: none;
+      }
+
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: auto;
+        list-style: none;
+        padding: 0;
+      }
+
+      .dropdown:hover .dropdown-menu {
+        display: block;
+      }
+
+      .dropdown-menu li {
+        margin: 0;
+        padding: 10px 20px;
+      }
+
+      .dropdown-menu a {
+        color: black;
+        text-decoration: none;
+      }
+
+      main {
+        padding-top: 1rem;
+        /* padding-left: 10px; */
+        margin: 0px;
+        /* margin-left: 10px ; */
+        font-family: "Poppins";
+      }
+
+      @media only screen and (max-width: 768px) {
+        nav {
+          flex-wrap: wrap;
+          position: flex;
+          width: 100%;
+          top: 0;
+        }
+
+        nav ul {
+          flex-direction: column;
+          width: 100%;
+        }
+
+        nav ul li:last-of-type {
+          padding-bottom: 8px;
+        }
+
+        nav ul.hidden {
+          display: none;
+        }
+
+        .menu-icon {
+          display: flex;
+          align-items: center;
+        }
+      }
+    </style>
   </head>
   <body>
     <nav>
       <div class="">
-        <img src="/static/assets/images/sialumni.png" alt="SIALUMNI" style="width: 300px;"/>
+        <img
+          src="/static/assets/images/sialumni.png"
+          alt="SIALUMNI"
+          style="width: 300px"
+        />
       </div>
       <div id="menu-icon" class="menu-icon">
         <i class="ph-fill ph-list"></i>
@@ -36,8 +163,10 @@
           <a href="{% url 'donasi' %}">Donasi</a>
         </li>
         <li>
-          <a class="btn btn-outline-info" href="{% url 'login' %}">Login</a>
-          <a class="btn btn-outline-success" href="{% url 'register' %}">Daftar</a>
+          <a class="btn btn-outline-info" target="_blank" href="{% url 'login' %}">Login</a>
+          <a class="btn btn-outline-success" target="_blank" href="{% url 'register' %}"
+            >Daftar</a
+          >
         </li>
       </ul>
     </nav>

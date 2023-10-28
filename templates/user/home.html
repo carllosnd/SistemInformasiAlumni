@@ -52,6 +52,14 @@
                                 <th>Jabatan</th>
                                 <td>{{ data.jabatan }}</td>
                             </tr>
+                            <tr>
+                                <th>Akun Linkedin</th>
+                                <td><a href="{{ data.linkedin }}">{{ data.linkedin }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Grup Whatsapp yang di ikuti</th>
+                                <td>{{ data.grup }}</td>
+                            </tr>
                             <tr class="bg bg-success">
                                 <th>Status</th>
                                 <td>{% if data.status %}Diverifikasi{% else %}Belum diverifikasi{% endif %}</td>

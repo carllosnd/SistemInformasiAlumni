@@ -6,52 +6,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   <link rel="stylesheet" href="/static/assets/css/footer.css">
+  
 </head>
 <body>
-
   <footer class="footer">
   	 <div class="container">
   	 	<div class="row">
   	 		<div class="footer-col">
-  	 			<h4>company</h4>
-  	 			<ul>
-  	 				<li><a href="#">about us</a></li>
-  	 				<li><a href="#">our services</a></li>
-  	 				<li><a href="#">privacy policy</a></li>
-  	 				<li><a href="#">affiliate program</a></li>
+  	 			<h4>Contact</h4>
+  	 			<ul style="color: white;">
+					<p>
+						<li><i class="fas fa-envelope"></i> alumniukrim@gmail.com</li>
+						<li><i class="fas fa-phone-alt"></i> 0856-8977-9088</li>
+						<li><i class="fas fa-map-marker-alt"></i> Jl. Solo Km. 11,1 Yogyakarta</li>
+					</p>
   	 			</ul>
   	 		</div>
   	 		<div class="footer-col">
-  	 			<h4>get help</h4>
-  	 			<ul>
-  	 				<li><a href="#">FAQ</a></li>
-  	 				<li><a href="#">shipping</a></li>
-  	 				<li><a href="#">returns</a></li>
-  	 				<li><a href="#">order status</a></li>
-  	 				<li><a href="#">payment options</a></li>
+  	 			<h4>About Us</h4>
+  	 			<ul style="color: white;">
+  	 				<li><a href="{% url 'visimisi' %}">Visi Misi</a></li>
+  	 				<li><a href="{% url 'strorg' %}">Struktur Organisasi</a></li>
   	 			</ul>
   	 		</div>
   	 		<div class="footer-col">
-  	 			<h4>online shop</h4>
-  	 			<ul>
-  	 				<li><a href="#">watch</a></li>
-  	 				<li><a href="#">bag</a></li>
-  	 				<li><a href="#">shoes</a></li>
-  	 				<li><a href="#">dress</a></li>
+  	 			<h4>Quick Akses</h4>
+  	 			<ul style="color: white;">
+  	 				<li><a href="{% url 'beranda' %}">Beranda</a></li>
+  	 				<li><a href="{% url 'alumni' %}">Alumni</a></li>
+  	 				<li><a href="{% url 'donasi' %}">Donasi</a></li>
+  	 				<li><a href="{% url 'login' %}">Login</a></li>
   	 			</ul>
   	 		</div>
-  	 		<div class="footer-col">
-  	 			<h4>follow us</h4>
-  	 			<div class="social-links">
-  	 				<a href="#"><i class="fab fa-facebook-f"></i></a>
-  	 				<a href="#"><i class="fab fa-twitter"></i></a>
-  	 				<a href="#"><i class="fab fa-instagram"></i></a>
-  	 				<a href="#"><i class="fab fa-linkedin-in"></i></a>
-  	 			</div>
-  	 		</div>
+			<div class="footer-col">
+				<h4>follow us</h4>
+				<div class="social-links">
+					<a href="https://www.facebook.com/ukrimuniversity"><i class="fab fa-facebook-f"></i></a>
+					<a href="https://www.instagram.com/ukrimuniversity/"><i class="fab fa-instagram"></i></a>
+					<a href="https://ukrim.ac.id/"><i class="fas fa-globe"></i></a>
+				</div>
+			</div>
   	 	</div>
-  	 </div>
-  </footer>
+	</div>
+	<div class="container">
+		<p style="color: white; margin-top: 5%;" class="text text-center">Copyright &#169; to Kelompok PPL 3 (Anila,Berlian,Carlos)</p>
+	</div>
+</footer>
 
 </body>
 </html>
+
+
+

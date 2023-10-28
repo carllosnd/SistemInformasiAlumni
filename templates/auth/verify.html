@@ -1,13 +1,14 @@
 {% autoescape off %}
 Hi {{ user.username }},
 
-Silahkan klik link dibawah ini untuk aktivasi akun anda :
+Terimakasih sudah mendaftar dilayanan Alumni Universitas Kristen Immanuel Yogyakarta
+Untuk mengaktifkan akun anda, silahkan klik link dibawah ini :
 
-{% block reset_link %}
+{% block reset_link %} 
 http://{{ domain }}{% url 'verification' uidb64=uid token=token %}
 {% endblock %}
 
-Kalau anda merasa tidak pernah melakukan tindakan ini, silahkan hiraukan saja email ini
+Jika Anda tidak pernah menginisiasi permintaan ini, mohon segera mengabaikan email ini.
 {% endautoescape %}
 
 

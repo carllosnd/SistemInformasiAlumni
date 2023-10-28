@@ -1,28 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-  <nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistem Informasi Alumni UKRIM</title>
+    <link rel="icon" type="image/png" href="/static/assets/images/ukrimlogo.png"/>
+    <style>
+      .slides {
+        width: 100%;
+        position: relative;
+      }
+
+      .slides .slide {
+        display: none;
+      }
+
+      .slides .slide img {
+        width: 100%;
+        animation-name: fade;
+        animation-duration: 1.5s;
+      }
+
+      .slides .navigation {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .slides .navigation .prev,
+      .slides .navigation .next {
+        cursor: pointer;
+        padding: 16px;
+        font-weight: bold;
+        font-size: 20px;
+        color: white;
+        background: rgba(0, 0, 0, 0.2);
+        user-select: none;
+        transition: 0.6s ease;
+      }
+
+      .slides .navigation .prev:hover,
+      .slides .navigation .next:hover {
+        background: rgba(0, 0, 0, 1);
+      }
+
+      .carousel-caption h1 {
+        font-size: 40px; /* Ukuran font default */
+        margin-bottom: 100px;
+      }
+
+      @keyframes fade {
+        from {
+          opacity: 0.3;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .slides .navigation .prev,
+        .slides .navigation .next {
+          font-size: 18px;
+          padding: 13px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .slides .navigation .prev,
+        .slides .navigation .next {
+          font-size: 15px;
+          padding: 10px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .slides .navigation .prev,
+        .slides .navigation .next {
+          font-size: 12px;
+          padding: 7px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .slides .navigation .prev,
+        .slides .navigation .next {
+          font-size: 11px;
+          padding: 6px;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .carousel-caption h1 {
+          font-size: 28px; /* Ukuran font untuk layar ukuran 992px atau kurang */
+          margin-top: 0;
+          margin-bottom: 100px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .carousel-caption h1 {
+          font-size: 24px; /* Ukuran font untuk layar ukuran 768px atau kurang */
+          margin-top: auto;
+          margin-bottom: 100px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .carousel-caption h1 {
+          font-size: 20px; /* Ukuran font untuk layar ukuran 576px atau kurang */
+          margin-bottom: 100px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .carousel-caption h1 {
+          font-size: 18px; /* Ukuran font untuk layar ukuran 360px atau kurang */
+          margin-bottom: 100px;
+          /* margin-top: auto; */
+        }
+      }
+
+      h3:before,
+      h3:after {
+            content: "\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0\00a0";
+            text-decoration: line-through;
+            margin: auto 0.5em;
+      }
+    </style>
+  </head>
+  <body>
     {% include 'layout/header.html' %}
-  </nav>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img
-                src="/static/assets/images/wisuda 1.jpg"
-                alt="Wisuda UKRIM"
-                style="width: 100%;"
-              />
-              <div class="carousel-caption">
-                <h3>Selamat Datang di Sistem Informasi Alumni</h3>
-                <h3>Universitas Kristen Immanuel Yogyakarta</h3>
-              </div>
-            </div>
+    <main>
+      <div class="slides">
+        <div class="slide">
+          <img src="/static/assets/images/wisuda 1.jpg" alt="" />
+          <div class="carousel-caption">
+            <h1>Selamat Datang di Sistem Informasi Alumni Universitas Kristen Immanuel Yogyakarta</h1>
           </div>
         </div>
-    {% include 'layout/footer.html' %}
-</body>
+      <h3 class="text-center" style="margin-top: 20px; color: rgb(205, 105, 17);"><b>Seputar Informasi</b></h3> <br>
+      <!-- {% include 'landingpage/informasi.html' %} -->
+      
+      <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+          showSlides((slideIndex += n));
+        }
+
+        function showSlides(n) {
+          var i;
+          var slides = document.getElementsByClassName("slide");
+          if (n > slides.length) {
+            slideIndex = 1;
+          }
+          if (n < 1) {
+            slideIndex = slides.length;
+          }
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+          slides[slideIndex - 1].style.display = "block";
+        }
+      </script>
+    </main>
+    {% include 'landingpage/informasi.html' %}
+    <!-- <h4 class="text text-center">Total Alumni <br> Universitas Kristen Immanuel Yogyakarta</h4> -->
+    <footer style="margin-top: 10%;">{% include 'layout/footer.html' %}</footer>
+  </body>
 </html>

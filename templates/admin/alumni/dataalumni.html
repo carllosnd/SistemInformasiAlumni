@@ -15,6 +15,16 @@
     {% endif %}
     <div class="card">
         <div class="table-responsive card-body">
+            <form style="float: right;" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input type="search" name="search" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                </div>
+             </form>
             <form action="{% url 'ajukandata' %}" method="POST">
                 <h1 class="font-weight-bold text-primary">Data Alumni</h1>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -27,6 +37,7 @@
                             <th>Email</th>
                             <th>No Hp</th>
                             <th>Prodi</th>
+                            <th>Tahun Lulus</th>
                             <th>Instansi</th>
                             <th>Jabatan</th>
                             <th>Gambar</th>
@@ -43,6 +54,7 @@
                             <td>{{ dataalumni.email }}</td>
                             <td>{{ dataalumni.nohp }}</td>
                             <td>{{ dataalumni.prodi }}</td>
+                            <td>{{ dataalumni.thnlulus }}</td>
                             <td>{{ dataalumni.instansi }}</td>
                             <td>{{ dataalumni.jabatan }}</td>
                             <td>
@@ -57,7 +69,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
-            </form>
+            <!-- </form> -->
             <div class="pagination">
                 <ul class="pagination justify-content-center">
             

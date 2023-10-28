@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Register</title>
+	<title>Sistem Informasi Alumni UKRIM</title>
+    <link rel="icon" type="image/png" href="/static/assets/images/ukrimlogo.png"/>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -33,7 +34,7 @@
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				{% if messages %}
 					{% for message in messages %}
-						<p class="alert alert-warning alert-dismissible fade show" role="alert">{{ message }}</p>
+						<p class="alert alert-warning alert-dismissible fade show text-center" role="alert">{{ message }}</p>
 					{% endfor %}
 				{% endif %}
 				<form action="{% url 'register' %}" class="login100-form validate-form" method="post">

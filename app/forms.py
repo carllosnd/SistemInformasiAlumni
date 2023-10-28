@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django import forms
-from app import models
+from .models import UserProfile
 
 class RegisterUserForm(UserCreationForm):
 	email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}))
@@ -20,3 +20,8 @@ class RegisterUserForm(UserCreationForm):
   
 class ReplyForm(forms.Form):
     reply = forms.CharField(widget=forms.Textarea(attrs={'rows': 2}))
+    
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['image']

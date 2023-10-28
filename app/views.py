@@ -4,11 +4,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login
-from app.forms import RegisterUserForm, ReplyForm
+from app.forms import RegisterUserForm, ReplyForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Agenda, BincangAlumni, DataAlumni, Loker, Pengumuman, Reply
+from .models import Agenda, BincangAlumni, DataAlumni, Loker, Pengumuman, Reply, UserProfile
 from django.core.paginator import Paginator
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -17,6 +17,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 
 def header(request):
     return render(request, 'layout/header.html')
@@ -62,24 +63,34 @@ def register(request):
     if request.method == "POST":
         form = RegisterUserForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            current_site = get_current_site(request)
-            mail_subject = 'Aktivasi Akun Anda'
-            message = render_to_string('auth/verify.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': default_token_generator.make_token(user),
-            })
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                mail_subject, message, to=[to_email]
-            )
-            email.send()
-            messages.success(request, ("Berhasil mendaftar! Silahkan periksa email anda untuk aktivasi akun!"))
-            return redirect('login')
+            email = form.cleaned_data.get('email')
+            # Memeriksa apakah alamat email sudah digunakan
+            if User.objects.filter(email=email).exists():
+                messages.error(request, 'Alamat email sudah digunakan. Silahkan gunakan alamat email lain.')
+                return redirect('register')
+            else :
+                user = form.save(commit=False)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                mail_subject = 'Aktivasi Akun Anda'
+                message = render_to_string('auth/verify.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': default_token_generator.make_token(user),
+                })
+                to_email = form.cleaned_data.get('email')
+                email = EmailMessage(
+                    mail_subject, message, to=[to_email]
+                )
+                email.send()
+                messages.success(request, ("Berhasil mendaftar! Silahkan periksa email anda untuk aktivasi akun!"))
+                return redirect('login')
+        else:
+            # Handle the case where passwords don't match
+            if 'password1' in form.errors and 'password2' in form.errors:
+                messages.error(request, 'Password tidak cocok. Silahkan coba lagi.')
     else:
         form = RegisterUserForm()
     return render(request, 'auth/register.html', {'form': form, })
@@ -112,6 +123,16 @@ def beranda(request):
     }
     return render(request, 'landingpage/beranda.html', context)
 
+def informasi(request):
+    dataagenda = Agenda.objects.all().order_by('dateagenda')
+    datapengumuman = Pengumuman.objects.all().order_by('datepengumuman')
+    dataloker = Loker.objects.all().order_by('dateloker')
+    context = {
+        'dataagenda' : dataagenda,
+        'datapengumuman' : datapengumuman,
+        'dataloker' : dataloker
+    }
+    return render(request, 'landingpage/informasi.html', context)
 
 def visimisi(request):
     return render(request, 'landingpage/tentangkami/visimisi.html')
@@ -122,17 +143,32 @@ def strorg(request):
 
 
 def alumni(request):
-    return render(request, 'landingpage/alumni.html')
+    if 'search' in request.GET:
+        search = request.GET['search']
+        # data = Data.objects.filter(last_name__icontains=q)
+        multiple_q = Q(Q(nim__icontains=search) | Q(nama__icontains=search))
+        dataalumni = DataAlumni.objects.filter(multiple_q)
+    else :
+        dataalumni = DataAlumni.objects.filter(status=True).order_by('nama')
+    context = {
+        'dataalumni' : dataalumni
+    }
+    return render(request, 'landingpage/alumni/alumni.html', context)
+
+def detailalumni(request, nim):
+    dataalumni = DataAlumni.objects.get(nim=nim)
+    context = {
+        'dataalumni' : dataalumni
+    }
+    return render(request, 'landingpage/alumni/detailalumni.html', context)
 
 
 def agenda(request):
     return render(request, 'landingpage/informasi/agenda.html')
 
 def detailagenda(request, idagenda):
-    data = Agenda.objects.all().order_by('dateagenda')
     dataagenda = Agenda.objects.get(idagenda=idagenda)
     context = {
-        'data' : data,
         'dataagenda' : dataagenda
     }
     return render(request, 'landingpage/informasi/detailagenda.html', context)
@@ -160,8 +196,6 @@ def detailloker(request, idloker):
 def donasi(request):
     return render(request, 'landingpage/donasi.html')
 
-def base(request):
-    return render(request, 'user/home.html')
 
 @login_required(login_url='login')
 def ajukandata(request):
@@ -184,6 +218,8 @@ def postajukandata(request):
     instansi = request.POST['instansi']
     jabatan = request.POST['jabatan']
     gambar = request.FILES['gambar']
+    grup = request.POST['grup']
+    linkedin = request.POST['linkedin']
 
     if DataAlumni.objects.filter(nim=nim).exists():
         messages.error(request, 'Nim yang di input sudah ada')
@@ -200,6 +236,8 @@ def postajukandata(request):
             instansi=instansi,
             jabatan=jabatan,
             gambar=gambar,
+            grup=grup,
+            linkedin = linkedin,
             user=request.user 
         )
         dataalumni.status = False
@@ -231,6 +269,8 @@ def postupdatedata(request):
     user_data.prodi = request.POST.get('prodi')
     user_data.instansi = request.POST.get('instansi')
     user_data.jabatan = request.POST.get('jabatan')
+    user_data.grup = request.POST.get('grup')
+    user_data.linkedin = request.POST.get('linkedin')
     user_data.save()
     messages.success(request, 'Data anda berhasil diperbaharui')
     return redirect('/homeuser')
@@ -262,7 +302,13 @@ def posttolakverif(request, nim):
 
 @login_required(login_url='login')
 def dataalumni(request):
-    dataalumni = DataAlumni.objects.filter(status=True).order_by('nama')
+    if 'search' in request.GET:
+        search = request.GET['search']
+        # data = Data.objects.filter(last_name__icontains=q)
+        multiple_q = Q(Q(nim__icontains=search) | Q(nama__icontains=search))
+        dataalumni = DataAlumni.objects.filter(multiple_q)
+    else :
+        dataalumni = DataAlumni.objects.filter(status=True).order_by('nama')
     page_number = request.GET.get('page')
     items_per_page = 10
     paginator = Paginator(dataalumni, items_per_page)
@@ -289,7 +335,7 @@ def homeadmin(request):
     dataagenda = Agenda.objects.count()
     datapengumuman = Pengumuman.objects.count()
     dataloker = Loker.objects.count()
-    dataalumni = DataAlumni.objects.count()
+    dataalumni = DataAlumni.objects.filter(status=True).count()
     verifikasi = DataAlumni.objects.filter(status=False).count()
     user = request.user
     context = {
@@ -557,11 +603,13 @@ def homeuser(request):
 
 @login_required(login_url='login')
 def bincangalumni(request):
+    dataalumni = DataAlumni.objects.get(user=request.user)
     datapesan = BincangAlumni.objects.all().order_by('-date')
     datareply = Reply.objects.all().order_by('date_reply')
     context = {
         'datapesan' : datapesan,
-        'datareply' : datareply
+        'datareply' : datareply,
+        'dataalumni' : dataalumni
     }
     return render(request, 'user/bincangalumni.html', context)
 
@@ -587,10 +635,23 @@ def reply(request, id):
             messages.success(request, 'Balasan anda berhasil terkirim')
     return redirect('bincangalumni') 
 
-@login_required(login_url='login')
-def profile(request):
-    user = request.user
-    context = {
-        'user' : user
-    }
-    return render(request, 'profile.html', context)
+# @login_required(login_url='login')
+# def profile(request):
+#     user = request.user
+#     profileimage = UserProfile.objects.filter(user=user)
+#     context = {
+#         'user' : user,
+#         'profileimage' : profileimage
+#     }
+#     return render(request, 'user/profile.html', context)
+
+# def addprofileimage(request):
+#     image = request.FILES['image']
+    
+#     profileimage = UserProfile(
+#         image = image,
+#         user = request.user
+#     )
+#     profileimage.save()
+#     messages.success(request, 'Foto berhasil ditambah')
+#     return redirect('profile')

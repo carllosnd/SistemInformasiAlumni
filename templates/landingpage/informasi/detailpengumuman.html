@@ -3,79 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="stylesheet" href="/static/assets/css/stylelandingpage.css" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/static/assets/css/informasi.css">
-    <title>Document</title>
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      .row {
-        display: flex;
-        flex-wrap: wrap;
-      }
-
-      /* Create two equal columns that sits next to each other */
-      .column {
-        flex: 50%;
-        max-width: 50%;
-        padding: 10px;
-      }
-
-    </style>
+    <title>Sistem Informasi Alumni UKRIM</title>
+    <link rel="icon" type="image/png" href="/static/assets/images/ukrimlogo.png"/>
   </head>
   <body>
-    <div class="navbar">
-      <div class="logo">
-        <img src="/static/assets/images/ukrimlogo.png" alt="Logo" />
-        <span>Sistem Informasi Alumni UKRIM</span>
-      </div>
-      <ul class="nav-list">
-        <li><a href="{% url 'beranda' %}">Beranda</a></li>
-        <li class="dropdown">
-          <a href="#">Tentang Kami</a>
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'visimisi' %}">Visi & Misi</a></li>
-            <li><a href="{% url 'strorg' %}">Struktur Organisasi</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#">Alumni</a>
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'alumni' %}">Data Alumni</a></li>
-            <li>
-              <a href="{% url 'login' %}" target="_blank">Login Alumni</a>
-            </li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#">Informasi</a>
-          <ul class="dropdown-menu">
-            <li><a href="{% url 'agenda' %}">Agenda</a></li>
-            <li><a href="{% url 'pengumuman' %}">Pengumuman</a></li>
-            <li><a href="{% url 'loker' %}">Lowongan Kerja (Loker)</a></li>
-          </ul>
-        </li>
-        <li><a href="{% url 'donasi' %}">Donasi</a></li>
-      </ul>
-    </div>
-    <div class="row">
-      <div class="column" style="background-color: white">
-        <h1>{{ datapengumuman.namapengumuman }}</h1>
-        <p class="">
-          Deskripsi Pengumuman :
-        </p>
-        <p>{{ datapengumuman.deskripsipengumuman }}</p>
-        <p>Unduh dokumen pengumuman disini : <a target="_blank" href="{{ datapengumuman.filepengumuman.url}}">{{ datapengumuman.namapengumuman }}</a></p>
-      </div>
-      
-      </div>
-    </div>
+    {% include 'layout/header.html' %}
+    <main style="margin-left: 30px; margin-right: 15px;">
+      <div class="row">
+        <div class="column" style="background-color: white">
+          <h1>{{ datapengumuman.namapengumuman }}</h1>
+          <p class="">
+            Deskripsi Pengumuman :
+          </p>
+          <p>{{ datapengumuman.deskripsipengumuman }}</p>
+          <p>Unduh dokumen pengumuman disini : <a target="_blank" href="{{ datapengumuman.filepengumuman.url}}">{{ datapengumuman.namapengumuman }}</a></p>
+        </div>
+    </main>
+    <footer style="margin-top: 15%;">{% include 'layout/footer.html' %}</footer>
   </body>
 </html>
