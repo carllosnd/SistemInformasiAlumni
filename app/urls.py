@@ -13,8 +13,8 @@ from .views import dataloker, addloker, postloker, updateloker, postupdateloker,
 urlpatterns = [
     #Landing Page
     path('',beranda,name="beranda"),
-    path('visimisi/',visimisi,name='visimisi'),
-    path('strorg/',strorg,name='strorg'),
+    path('visimisi',visimisi,name='visimisi'),
+    path('strorg',strorg,name='strorg'),
     path('alumni',alumni,name='alumni'),
     path('detailalumni/<str:nim>',detailalumni,name='detailalumni'),
     path('agenda',agenda,name='agenda'),
@@ -23,7 +23,7 @@ urlpatterns = [
     path('detailpengumuman/<str:idpengumuman>',detailpengumuman,name='detailpengumuman'),
     path('loker/',loker,name='loker'),
     path('detailloker/<str:idloker>',detailloker,name='detailloker'),
-    path('donasi/',donasi,name='donasi'),
+    path('donasi',donasi,name='donasi'),
     path('informasi',informasi,name='informasi'),
     
     #Authentication
