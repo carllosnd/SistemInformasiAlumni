@@ -145,11 +145,13 @@ def strorg(request):
 def alumni(request):
     if 'search' in request.GET:
         search = request.GET['search']
-        # data = Data.objects.filter(last_name__icontains=q)
-        multiple_q = Q(Q(nim__icontains=search) | Q(nama__icontains=search))
+        multiple_q = Q(Q(nama__icontains=search) | Q(nim__icontains=search))
         dataalumni = DataAlumni.objects.filter(multiple_q)
     else :
         dataalumni = DataAlumni.objects.filter(status=True).order_by('nama')
+    paginator = Paginator(dataalumni, 6)  # Membagi data menjadi 10 item per halaman
+    page = request.GET.get('page')
+    dataalumni = paginator.get_page(page)
     context = {
         'dataalumni' : dataalumni
     }
@@ -220,6 +222,8 @@ def postajukandata(request):
     gambar = request.FILES['gambar']
     grup = request.POST['grup']
     linkedin = request.POST['linkedin']
+    instagram = request.POST['instagram']
+    facebook = request.POST['facebook']
 
     if DataAlumni.objects.filter(nim=nim).exists():
         messages.error(request, 'Nim yang di input sudah ada')
@@ -238,6 +242,8 @@ def postajukandata(request):
             gambar=gambar,
             grup=grup,
             linkedin = linkedin,
+            instagram = instagram,
+            facebook = facebook,
             user=request.user 
         )
         dataalumni.status = False
@@ -271,6 +277,8 @@ def postupdatedata(request):
     user_data.jabatan = request.POST.get('jabatan')
     user_data.grup = request.POST.get('grup')
     user_data.linkedin = request.POST.get('linkedin')
+    user_data.instagram = request.POST.get('instagram')
+    user_data.facebook = request.POST.get('facebook')
     user_data.save()
     messages.success(request, 'Data anda berhasil diperbaharui')
     return redirect('/homeuser')
@@ -603,7 +611,7 @@ def homeuser(request):
 
 @login_required(login_url='login')
 def bincangalumni(request):
-    dataalumni = DataAlumni.objects.get(user=request.user)
+    # dataalumni = DataAlumni.objects.get(user=request.user)
     datapesan = BincangAlumni.objects.all().order_by('-date')
     datareply = Reply.objects.all().order_by('date_reply')
     context = {

@@ -19,6 +19,8 @@ class DataAlumni(models.Model):
     gambar = models.ImageField(upload_to='static/assets/images', blank=True, null=True)
     grup = models.CharField(max_length=255)
     linkedin = models.CharField(max_length=255)
+    instagram = models.CharField(max_length=255)
+    facebook = models.CharField(max_length=255)
     status = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     

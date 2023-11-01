@@ -8,7 +8,7 @@
     <h1 class="font-weight-bold text-primary mb-3">Selamat Datang, {{ user.first_name }}</h1>
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3" style="margin-bottom: 5%;">
                 {% for data in user_data %}
                 <div class="form-group">
                     <img style="width: 200px;" src="{{ data.gambar }}" alt="">
@@ -55,6 +55,14 @@
                             <tr>
                                 <th>Akun Linkedin</th>
                                 <td><a href="{{ data.linkedin }}">{{ data.linkedin }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Akun Linkedin</th>
+                                <td><a href="{{ data.instagram }}">{{ data.instagram }}</a></td>
+                            </tr>
+                            <tr>
+                                <th>Akun Linkedin</th>
+                                <td><a href="{{ data.facebook }}">{{ data.facebook }}</a></td>
                             </tr>
                             <tr>
                                 <th>Grup Whatsapp yang di ikuti</th>

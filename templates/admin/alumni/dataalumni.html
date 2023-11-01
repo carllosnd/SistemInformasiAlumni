@@ -6,6 +6,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        @media (min-width: 768px) {
+            .navbar-search {
+                float: right; /* Form pencarian akan float ke kanan pada layar lebih besar dari 768px */
+            }
+        }
+
+        @media (max-width: 767px) {
+            .navbar-search {
+                float: none; /* Form pencarian tidak akan floating pada layar yang lebih kecil dari atau sama dengan 767px */
+                display: block; /* Membuatnya ditampilkan sebagai blok di bawah elemen-elemen lain */
+                margin-top: 10px; /* Atur margin atas jika diperlukan untuk memberikan jarak yang baik dari elemen-elemen lain */
+            }
+        }
+    </style>
 </head>
 <body>
     {% if messages %}
@@ -15,18 +30,18 @@
     {% endif %}
     <div class="card">
         <div class="table-responsive card-body">
-            <form style="float: right;" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <h1 style="float: left;" class="font-weight-bold text-primary">Data Alumni</h1>
+            <form class="form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div class="input-group">
                     <input type="search" name="search" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
                             <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
+                        </button>
+                    </div>
                 </div>
-             </form>
+            </form>            
             <form action="{% url 'ajukandata' %}" method="POST">
-                <h1 class="font-weight-bold text-primary">Data Alumni</h1>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead class="table-secondary">
                         <tr>
@@ -66,8 +81,8 @@
                             </td>
                             
                         </tr>
-                        {% endfor %}
                     </tbody>
+                    {% endfor %}
                 </table>
             <!-- </form> -->
             <div class="pagination">
