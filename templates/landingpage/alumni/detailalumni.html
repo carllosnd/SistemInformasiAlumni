@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Alumni UKRIM</title>
+    <link rel="icon" type="image/png" href="/static/assets/images/ukrimlogo.png"/>
+</head>
+<body>
+    {% include 'layout/header.html' %}
+    <main style="margin-left: 20px; margin-right: 30px;">
+        <h1 style="margin-bottom: 3%;">Detail Alumni</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3" style="margin-bottom: 5%;">
+                    <div class="form-group">
+                        <img style="width: 200px;" src="{{ dataalumni.gambar.url }}" alt="">
+                    </div>
+                    {% if dataalumni.linkedin or dataalumni.instagram or dataalumni.facebook %}
+                        <span>Connect with : </span>
+                        {% if dataalumni.linkedin %}
+                        <a href="{{ dataalumni.linkedin }}"><i class="fab fa-linkedin"></i></a>
+                        {% endif %}
+
+                        {% if dataalumni.instagram %}
+                        <a href="{{ dataalumni.instagram }}"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+
+                        {% if dataalumni.facebook %}
+                        <a href="{{ dataalumni.facebook }}"><i class="fab fa-facebook"></i></a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="col-md-7">
+                    <table class="table table-borderless">
+                        <tbody class="font-weight-bold">
+                                <tr>
+                                    <th>Nama</th>
+                                    <td>: {{ dataalumni.nama }}</td>
+                                </tr>
+                                <tr>
+                                    <th>NIM</th>
+                                    <td>: {{ dataalumni.nim }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Alamat</th>
+                                    <td>: {{ dataalumni.alamat }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>: <a href="mailto:{{dataalumni.email}}" style="color: black;">{{ dataalumni.email}}</a></td>
+                                </tr>
+                                <!-- <tr>
+                                    <th>No HP</th>
+                                    <td>: {{ dataalumni.nohp }}</td>
+                                </tr> -->
+                                <tr>
+                                    <th>Prodi</th>
+                                    <td>: {{ dataalumni.prodi }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Instansi</th>
+                                    <td>: {{ dataalumni.instansi }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Jabatan</th>
+                                    <td>: {{ dataalumni.jabatan }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Grup Whatsapp yang di ikuti</th>
+                                    <td>: {{ dataalumni.grup }}</td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer style="margin-top: 3%;">{% include 'layout/footer.html' %}</footer>
+</body>
+</html>
