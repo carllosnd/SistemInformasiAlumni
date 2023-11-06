@@ -63,34 +63,29 @@ def register(request):
     if request.method == "POST":
         form = RegisterUserForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data.get('email')
-            # Memeriksa apakah alamat email sudah digunakan
-            if User.objects.filter(email=email).exists():
-                messages.error(request, 'Alamat email sudah digunakan. Silahkan gunakan alamat email lain.')
-                return redirect('register')
-            else :
-                user = form.save(commit=False)
-                user.is_active = False
-                user.save()
-                current_site = get_current_site(request)
-                mail_subject = 'Aktivasi Akun Anda'
-                message = render_to_string('auth/verify.html', {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': default_token_generator.make_token(user),
-                })
-                to_email = form.cleaned_data.get('email')
-                email = EmailMessage(
-                    mail_subject, message, to=[to_email]
-                )
-                email.send()
-                messages.success(request, ("Berhasil mendaftar! Silahkan periksa email anda untuk aktivasi akun!"))
-                return redirect('login')
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            mail_subject = 'Aktivasi Akun Anda'
+            message = render_to_string('auth/verify.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': default_token_generator.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+            email.send()
+            messages.success(request, ("Berhasil mendaftar! Silahkan periksa email anda untuk aktivasi akun!"))
+            return redirect('login')
         else:
-            # Handle the case where passwords don't match
-            if 'password1' in form.errors and 'password2' in form.errors:
-                messages.error(request, 'Password tidak cocok. Silahkan coba lagi.')
+            # Jika formulir tidak valid, pesan kesalahan akan ditampilkan
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f" {error}")
     else:
         form = RegisterUserForm()
     return render(request, 'auth/register.html', {'form': form, })
