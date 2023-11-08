@@ -34,11 +34,18 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('/static/assets/images/Soft\ Blue\ Gray\ Gradation\ Blur\ iPhone\ Wallpapers.jpeg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-				{% if messages %}
-					{% for message in messages %}
-						<p class="alert alert-danger alert-dismissible fade show text-center" role="alert">{{ message }}</p>
-					{% endfor %}
-				{% endif %}
+				<div id="notification-container">
+					{% if messages %}
+						{% for message in messages %}
+							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+								{{ message }}
+								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>				
 				<form class="login100-form validate-form" method="post">
                     {% csrf_token %}
 					<span class="login100-form-title p-b-49">
@@ -49,28 +56,32 @@
 						<input class="input100" type="text" name="first_name" placeholder="Masukkan nama anda">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
-					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required">
+					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is required" style="margin-bottom: 0%;">
 						<span class="label-input100">Username</span>
 						<input class="input100" type="text" name="username" placeholder="Masukkan username anda">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
+					<p class="label-input100" style="color: rgb(42, 94, 54); font-size: 8px;">* Hanya boleh berisi huruf, angka, dan karakter @/./+/-/_ saja.</p>
+
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Email is required">
 						<span class="label-input100">Email</span>
 						<input class="input100" type="text" name="email" placeholder="Masukkan email anda">
 						<span class="focus-input100" data-symbol="&#x2709;"></span>
 					</div>
 					
-					<div class="wrap-input100 validate-input m-b-23" data-validate="Password is required">
+					<div class="wrap-input100 validate-input m-b-23" data-validate="Password is required" style="margin-bottom: 0%;">
 						<span class="label-input100">Password</span>
 						<input class="input100" type="password" name="password1" placeholder="Masukkan password anda">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
+					<p class="label-input100" style="color: rgb(42, 94, 54); font-size: 8px;">* Password minimal 8 karakter dengan kombinasi huruf dan angka dan tidak boleh mengandung username / nama</p>
 					
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100">Password Confirmation</span>
 						<input class="input100" type="password" name="password2" placeholder="Masukkan password anda sekali lagi">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
+					
 
 					<div class="text-right p-t-8 p-b-31">
 						<!-- <a href="#">
@@ -112,6 +123,30 @@
 	<script src="/static/assets/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="/static/assets/js/main.js"></script>
+
+	<script>
+		// Fungsi untuk menghilangkan notifikasi
+		function removeNotification(notification) {
+			notification.style.display = "none";
+		}
+	
+		document.addEventListener("DOMContentLoaded", function () {
+			const notifications = document.querySelectorAll(".alert");
+			notifications.forEach((notification) => {
+				// Menghilangkan notifikasi setelah 5 detik
+				setTimeout(() => {
+					removeNotification(notification);
+				}, 5000);
+	
+				// Event listener untuk tombol "x"
+				const closeButton = notification.querySelector(".close");
+				closeButton.addEventListener("click", function () {
+					removeNotification(notification);
+				});
+			});
+		});
+	</script>
+	
 
 </body>
 </html>
