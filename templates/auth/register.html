@@ -29,6 +29,19 @@
 	<link rel="stylesheet" type="text/css" href="/static/assets/css/main.css">
 <!--===============================================================================================-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<!---->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<!----->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-sY74vKiCECVzLd9eFJ0soETizgGbtyb3PPU/cN9zd8HBqQ/ZqJRrGSElYD2lKeVvAjr1CvM/BwKntt4sMvR0gQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+	<style>
+		.password-toggle {
+		  position: absolute;
+		  right: 10px;
+		  top: 50%;
+		  transform: translateY(-50%);
+		  cursor: pointer;
+		}
+	</style>
 </head>
 <body>
 	<div class="limiter">
@@ -61,7 +74,7 @@
 						<input class="input100" type="text" name="username" placeholder="Masukkan username anda">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
-					<p class="label-input100" style="color: rgb(42, 94, 54); font-size: 8px;">* Hanya boleh berisi huruf, angka, dan karakter @/./+/-/_ saja.</p>
+					<p class="label-input100" style="color: red; font-size: 10px;">* Hanya boleh berisi huruf, angka, dan karakter @/./+/-/_ saja.</p>
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Email is required">
 						<span class="label-input100">Email</span>
@@ -69,20 +82,23 @@
 						<span class="focus-input100" data-symbol="&#x2709;"></span>
 					</div>
 					
-					<div class="wrap-input100 validate-input m-b-23" data-validate="Password is required" style="margin-bottom: 0%;">
-						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="password1" placeholder="Masukkan password anda">
-						<span class="focus-input100" data-symbol="&#xf190;"></span>
-					</div>
-					<p class="label-input100" style="color: rgb(42, 94, 54); font-size: 8px;">* Password minimal 8 karakter dengan kombinasi huruf dan angka dan tidak boleh mengandung username / nama</p>
+					<div class="input-group">
+						<div class="wrap-input100 validate-input m-b-23" data-validate="Password is required" style="margin-bottom: 0%;">
+							<span class="label-input100">Password</span>
+							<input class="input100" type="password" name="password1" id="password1" placeholder="Masukkan password anda">
+							<span class="focus-input100" data-symbol="&#xf190;"></span>
+							<span class="password-toggle" onclick="togglePassword('password1', 'toggleIcon1')"><i class="far fa-eye-slash" id="toggleIcon1"></i></span>
+						</div>
+						<p class="label-input100" style="color: red; font-size: 10px;">* Password minimal 8 karakter dengan kombinasi huruf dan angka dan tidak boleh mengandung username / nama</p>
 					
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<span class="label-input100">Password Confirmation</span>
-						<input class="input100" type="password" name="password2" placeholder="Masukkan password anda sekali lagi">
-						<span class="focus-input100" data-symbol="&#xf190;"></span>
+						<div class="wrap-input100 validate-input" data-validate="Password is required">
+							<span class="label-input100">Password Confirmation</span>
+							<input class="input100" type="password" name="password2" id="password2" placeholder="Masukkan password anda sekali lagi">
+							<span class="focus-input100" data-symbol="&#xf190;"></span>
+							<span class="password-toggle" onclick="togglePassword('password2', 'toggleIcon2')"><i class="far fa-eye-slash" id="toggleIcon2"></i></span>
+						</div>
 					</div>
-					
-
+					  
 					<div class="text-right p-t-8 p-b-31">
 						<!-- <a href="#">
 							Forgot password?
@@ -145,6 +161,22 @@
 				});
 			});
 		});
+
+		//show and hide password
+		function togglePassword(inputId, iconId) {
+			var passwordInput = document.getElementById(inputId);
+			var toggleIcon = document.getElementById(iconId);
+
+			if (passwordInput.type === "password") {
+				passwordInput.type = "text";
+				toggleIcon.classList.remove("fa-eye-slash");
+				toggleIcon.classList.add("fa-eye");
+			} else {
+				passwordInput.type = "password";
+				toggleIcon.classList.remove("fa-eye");
+				toggleIcon.classList.add("fa-eye-slash");
+			}
+		}
 	</script>
 	
 

@@ -29,6 +29,17 @@
 	<link rel="stylesheet" type="text/css" href="/static/assets/css/main.css">
 <!--===============================================================================================-->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<!--===============================================================================================-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<style>
+		.password-toggle {
+		  position: absolute;
+		  right: 10px;
+		  top: 50%;
+		  transform: translateY(-50%);
+		  cursor: pointer;
+		}
+	</style>
 </head>
 <body>
 	<div class="limiter">
@@ -50,10 +61,18 @@
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
+					<!-- <div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100">Password</span>
 						<input class="input100" type="password" name="password" placeholder="Masukkan password anda">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
+						<span class="password-toggle" onclick="togglePassword('password', 'toggleIcon')"><i class="far fa-eye-slash" id="toggleIcon"></i></span>
+					</div> -->
+
+					<div class="wrap-input100 validate-input m-b-23" data-validate="Password is required" style="margin-bottom: 0%;">
+						<span class="label-input100">Password</span>
+						<input class="input100" type="password" name="password" id="password" placeholder="Masukkan password anda">
+						<span class="focus-input100" data-symbol="&#xf190;"></span>
+						<span class="password-toggle" onclick="togglePassword('password', 'toggleIcon')"><i class="far fa-eye-slash" id="toggleIcon"></i></span>
 					</div>
 					
 					<div class="text-right p-t-8 p-b-31">
@@ -96,6 +115,24 @@
 	<script src="/static/assets/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="/static/assets/js/main.js"></script>
+<!--===============================================================================================-->
+	<script>
+		//show and hide password
+		function togglePassword(inputId, iconId) {
+			var passwordInput = document.getElementById(inputId);
+			var toggleIcon = document.getElementById(iconId);
+
+			if (passwordInput.type === "password") {
+				passwordInput.type = "text";
+				toggleIcon.classList.remove("fa-eye-slash");
+				toggleIcon.classList.add("fa-eye");
+			} else {
+				passwordInput.type = "password";
+				toggleIcon.classList.remove("fa-eye");
+				toggleIcon.classList.add("fa-eye-slash");
+			}
+		}
+	</script>
 
 </body>
 </html>
